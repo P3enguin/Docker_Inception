@@ -1,7 +1,36 @@
 version : '3'
 
 services:
-    nginx:
-        image: nginx:latest
-        ports:
-          - 80:80
+  # nginx:
+  #   image: nginx:latest
+  #   ports:
+  #     - 443:443
+  #   volumes:
+  #     - ./nginx/:/etc/nginx
+  wordpress:
+#    build: #path of the docker file 
+    image: wordpress
+    ports:
+      - 9000:80
+    volumes:
+      - ./data/wp:/var/www/html
+    depends_on:
+      - mariadb
+      
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: pengu
+      WORDPRESS_DB_PASSWORD: 1234
+      WORDPRESS_DB_NAME: db_wp
+  mariadb:
+    image: mariadb:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data/db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: db_wp
+      MYSQL_USER: pengu
+      MYSQL_PASSWORD: 1234
+      MYSQL_RANDOM_ROOT_PASSWORD: 'root_pass'
+    
