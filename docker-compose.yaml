@@ -8,7 +8,7 @@ services:
     ports:
       - 443:80
     volumes:
-      - ./nginx:/etc/nginx/conf.d/
+      # - ./nginx:/etc/nginx/conf.d/
       - ./wordpress:/var/www/html
     links:
       - wordpress
@@ -17,8 +17,8 @@ services:
     image: wordpress
     ports:
       - 9000:80
-    # volumes:
-    #   - ./data/wp:/var/www/html
+    volumes:
+      - ./wordpress:/var/www/html
     links:
       - mariadb
       
@@ -32,7 +32,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./wordpress:/var/www/html
+      - ./maria:/var/www/html
     environment:
       MYSQL_DATABASE: db_wp
       MYSQL_USER: pengu
