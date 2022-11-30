@@ -1,4 +1,7 @@
 FROM debian:latest
 
-RUN apt update \
-    && apk install
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    
+
+
