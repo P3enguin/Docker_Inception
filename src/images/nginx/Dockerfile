@@ -1,11 +1,11 @@
-FROM alpine:latest
+FROM debian:buster
 
-RUN apk update \
-    && apk add nginx
+RUN apt-get update -y \
+    && apt-get install nginx -y
 
-COPY index.html /var/www/html/
-COPY default.conf /etc/nginx/http.d
+# COPY index.html /var/www/html/
+# COPY default.conf /etc/nginx/http.d
 # COPY default /etc/nginx/sites-available/default
 
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
-# CMD ["/bin/sh"]
+# CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+CMD ["bash"]
