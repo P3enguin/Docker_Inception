@@ -11,6 +11,8 @@ RUN cd ~/ \
     && cd /wpp/ \
     && wp --allow-root core download 
 
+RUN wp config create --dbname=db1 \
+        --dbuser=ybensell --dbpass=123456 --dbhost=maria
 EXPOSE 80
 
 # COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
@@ -19,8 +21,5 @@ EXPOSE 80
 #     && service php7.3-fpm restart
 # COPY ./entry_point.sh /
 
-
-CMD ["bash"]
+CMD ["php-fpm"]
     
-
-

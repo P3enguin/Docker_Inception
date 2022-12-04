@@ -1,72 +1,75 @@
-version: '3'
+# version: '3'
 
-volumes:
-  db:
-    name: db
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/pengu/inception/data/db
-      o: bind
-
-services:
-  mariadb:
-    build: ./images/mariadb
-    image: mariadb:database
-    ports:
-      - 3306:3306
-    volumes:
-      - db:/var/lib/mysql
-    environment:
-      MYSQL_DATABASE: db_wp
-      MYSQL_USER: pengu
-      MYSQL_PASSWORD: 1234
-      MYSQL_RANDOM_ROOT_PASSWORD: 'root_pass'
-
-
-
-# version : '3'
-
+# volumes:
+#   db:
+#     name: db
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: /home/pengu/inception/data/db
+#       o: bind
 
 # services:
-#   nginx:
-
-#     image: nginx
-#     ports:
-#       - 443:80
-#     volumes:
-#       # - ./nginx:/etc/nginx/conf.d/
-#       - ./wordpress:/var/www/html
-#     links:
-#       - wordpress
-#   wordpress:
-# #    build: #path of the docker file 
-#     image: wordpress
-#     ports:
-#       - 9000:80
-#     volumes:
-#       - ./wordpress:/var/www/html
-#     links:
-#       - mariadb
-      
-#     environment:
-#       WORDPRESS_DB_HOST: mariadb
-#       WORDPRESS_DB_USER: pengu
-#       WORDPRESS_DB_PASSWORD: 1234
-#       WORDPRESS_DB_NAME: db_wp
 #   mariadb:
-#     image: mariadb:latest
+#     build: ./images/mariadb
+#     image: mariadb:database
 #     ports:
 #       - 3306:3306
 #     volumes:
-#       - ./maria:/var/lib/mysql
+#       - db:/var/lib/mysql
 #     environment:
 #       MYSQL_DATABASE: db_wp
 #       MYSQL_USER: pengu
 #       MYSQL_PASSWORD: 1234
 #       MYSQL_RANDOM_ROOT_PASSWORD: 'root_pass'
+
+
+version : '3'
+
+services:
+  nginx:
+    depends_on:
+      - wordpress
+    build: ./images/nginx
+    ports:
+      - 443:443
+    # volumes:
+    #   # - ./nginx:/etc/nginx/conf.d/
+    #   - ./wordpress:/var/www/html
+    networks:
+      - inception
+
+  wordpress:
+    depends_on:
+      - maria
+    build : ./images/wordpress
+    ports:
+      - 9000:80
+    # volumes:
+    #   - ./wordpress:/var/www/html
+
+    environment:
+      - WORDPRESS_DB_HOST=maria:3306
+      - WORDPRESS_DB_USER=ybensell
+      - WORDPRESS_DB_PASSWORD=123456
+      - WORDPRESS_DB_NAME=db1
+    networks:
+      - inception
+
+  maria:
+    build: ./images/mariadb
+    ports:
+      - 3306:3306
+    networks:
+      - inception
+    # volumes:
+    #   - ./maria:/var/lib/mysql
+    # environment:
+    #   MYSQL_DATABASE: db_wp
+    #   MYSQL_USER: pengu
+    #   MYSQL_PASSWORD: 1234
+    #   MYSQL_RANDOM_ROOT_PASSWORD: 'root_pass'
     
-# networks:
-#   default:
-#     name: inception
-#     external: true
+networks:
+  inception:
+    driver: bridge
