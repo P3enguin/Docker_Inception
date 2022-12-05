@@ -7,12 +7,13 @@ server {
         ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
         ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
-        root /wpp;
+        root /var/www/html;
 
         # Add index.php to the list if you are using PHP
         # index index.html index.htm index.nginx-debian.html;
 
         server_name localhost;
+        index index.html index.htm index.php;
 
         # location / {
         #         # First attempt to serve request as file, then
@@ -20,15 +21,17 @@ server {
         #         try_files $uri $uri/ =404;
         # }
         
-        location / {
-                      try_files $uri $uri/ /index.php$is_args$args;
-        }
+        # location / {
+        #               try_files $uri $uri/ /index.php$is_args$args;
+        # }
 
         location ~ \.php$ {
+
             fastcgi_split_path_info ^(.+\.php)(/.+)$;
-            fastcgi_pass wordpress:9000 ;
+            fastcgi_pass wordpress:9000;
             fastcgi_index index.php;
             include fastcgi.conf;
+
         }
         # pass PHP scripts to FastCGI server
         

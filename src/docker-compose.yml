@@ -13,6 +13,7 @@ volumes:
 
 services:
   nginx:
+    container_name : nginx
     depends_on:
       - wordpress
     build: ./images/nginx
@@ -26,22 +27,26 @@ services:
     restart: unless-stopped
 
   wordpress:
+    container_name : wordpress
     depends_on:
       - maria
     build : ./images/wordpress
+    ports:
+      - 9000:9000
     volumes:
       - ./data/wp:/wpp
 
-    environment:
-      - WORDPRESS_DB_HOST: maria
-      - WORDPRESS_DB_USER: "ybensell"
-      - WORDPRESS_DB_PASSWORD: "123456"
-      - WORDPRESS_DB_NAME: db1
+    # environment:
+    #   - WORDPRESS_DB_HOST: maria
+    #   - WORDPRESS_DB_USER: "ybensell"
+    #   - WORDPRESS_DB_PASSWORD: "123456"
+    #   - WORDPRESS_DB_NAME: db1
     networks:
       - inception
     restart: unless-stopped
 
   maria:
+    container_name : maria
     build: ./images/mariadb
     ports:
       - 3306:3306
