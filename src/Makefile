@@ -6,6 +6,9 @@ re:
 
 
 clean:
-	docker rm $$(docker ps -q -a) -f && \
-	docker rmi $$(docker images -q -a) -f && \
-	docker volume rm $$(docker volume ls -a)
+	docker system prune -f
+	docker stop $$(docker ps -qa) ;\
+	docker rm $$(docker ps -qa) ; \
+	docker rmi -f $$(docker images -qa) ; \
+	docker volume rm $$(docker volume ls -q) ;\
+	docker network rm $$(docker network ls -q)

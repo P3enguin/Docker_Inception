@@ -14,5 +14,5 @@ COPY default /etc/nginx/sites-enabled/
 
 # RUN rm /etc/nginx/sites-enabled/default
 
-# CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
-CMD ["bash"]
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+# CMD ["bash"]

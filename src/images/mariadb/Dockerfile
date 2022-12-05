@@ -12,4 +12,4 @@ COPY ./conf/script.sql /etc/mysql/
 
 RUN  service mysql restart && mysql -u root < /etc/mysql/script.sql
 
-CMD ["mysqld"]
+CMD ["mysqld_safe"]
