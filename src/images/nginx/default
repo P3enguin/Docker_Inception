@@ -1,5 +1,3 @@
-# Default server configuration
-#
 server {
         listen 443 ssl http2 default_server;
         listen [::]:443 ssl http2 default_server;
@@ -51,10 +49,3 @@ server {
         #       deny all;
         #}
 }
-
-
-# Virtual Host configuration for example.com
-#
-# You can move that to a different file under sites-available/ and symlink that
-# to sites-enabled/ to enable it.
-#
