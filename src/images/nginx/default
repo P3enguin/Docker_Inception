@@ -10,7 +10,7 @@ server {
         # Add index.php to the list if you are using PHP
         # index index.html index.htm index.nginx-debian.html;
 
-        server_name localhost;
+        server_name ybensell.42.fr;
         index index.html index.htm index.php;
 
         # location / {
@@ -22,7 +22,6 @@ server {
         # location / {
         #               try_files $uri $uri/ /index.php$is_args$args;
         # }
-
         location ~ \.php$ {
 
             fastcgi_split_path_info ^(.+\.php)(/.+)$;

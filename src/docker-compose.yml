@@ -1,16 +1,5 @@
 version : '3'
 
-volumes:
-  db:
-    name: db
-    driver: local
-    driver_opts:
-      type: none
-      device: ./data/db
-      o: bind 
-      # When you use a bind mount, a file or directory on the host machine
-      # is mounted into a container.
-
 services:
   nginx:
     container_name : nginx
@@ -19,9 +8,8 @@ services:
     build: ./images/nginx
     ports:
       - 443:443
-    # volumes:
-    #   # - ./nginx:/etc/nginx/conf.d/
-    #   - ./wordpress:/var/www/html
+    volumes:
+      - wp:/var/www/html
     networks:
       - inception
     restart: unless-stopped
@@ -34,7 +22,7 @@ services:
     ports:
       - 9000:9000
     volumes:
-      - ./data/wp:/wpp
+      - wp:/var/www/html
     environment:
       - WORDPRESS_DB_HOST=maria
       - WORDPRESS_DB_USER="ybensell"
@@ -65,6 +53,18 @@ networks:
     name: inception
     driver: bridge
 
-
-
-
+volumes:
+  db:
+    name: db
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/db
+  wp:
+    name : wp
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/wp

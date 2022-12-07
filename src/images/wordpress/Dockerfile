@@ -10,8 +10,7 @@ RUN cd ~/ \
     && mkdir -p /var/www/html \
     && wp core download --path=/var/www/html --allow-root
 
-# RUN wp --allow-root config create --dbname=db1 \
-#         --dbuser=ybensell --dbpass=123456 --dbhost=maria
+
 EXPOSE 9000
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
