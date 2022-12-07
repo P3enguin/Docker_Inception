@@ -19,7 +19,8 @@ COPY ./conf/entry_script.sh /tmp
 RUN chmod 777 /tmp/entry_script.sh
 
 
-ENTRYPOINT ["bash","/tmp/entry_script.sh"]
-# RUN echo "test"
+ENTRYPOINT ["/tmp/entry_script.sh"]
 CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
-# CMD ["bash"]
+
+
+

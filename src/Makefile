@@ -4,12 +4,6 @@ all:
 re: 
 	docker-compose -f ./docker-compose.yml up --build
 
-
-
-
-
-
-
 clean:
 	docker system prune -f
 	docker stop $$(docker ps -qa) ;\
