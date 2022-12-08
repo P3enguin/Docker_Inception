@@ -10,14 +10,10 @@ RUN cd ~/ \
     && mkdir -p /var/www/html \
     && wp core download --path=/var/www/html --allow-root
 
-
-EXPOSE 9000
-
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 COPY ./conf/entry_script.sh /tmp
 
 RUN chmod 777 /tmp/entry_script.sh
-
 
 ENTRYPOINT ["/tmp/entry_script.sh"]
 CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]

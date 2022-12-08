@@ -1,15 +1,16 @@
 #!/bin/bash
 
+chown -R www-data:www-data /var/www/* 
+chown -R 755 /var/www/* 
 if [[ ! -f /var/www/html/wp-config.php ]] 
 then
-    chown -R www-data:www-data /var/www/* 
-    chown -R 755 /var/www/* 
     echo "im here"
-    wp core config --path=/var/www/html --dbname=db1 --dbuser=ybensell --dbpass=123456 --dbhost=maria --allow-root --skip-check 
+    wp core config --path=/var/www/html --dbname=${WORDPRESS_DB_NAME} --dbuser=${WORDPRESS_DB_USER} --dbpass=${WORDPRESS_DB_PASSWORD} --dbhost=${WORDPRESS_DB_HOST}--allow-root --skip-check 
     echo "conf success"
-    wp core install --path=/var/www/html --url=ybensell.42.fr --title="INCEPTION" --admin_user=ybensell --admin_password=123456 --admin_email=hh@hotmail.com --allow-root
-    wp user create wpp  wpp@gmail.com --user_pass=123456 --path=/var/www/html --allow-root
+    wp core install --path=/var/www/html --url=ybensell.42.fr --title="INCEPTION" --admin_user=${WORDPRESS_ADMIN_USER} --admin_password=${WORDPRESS_ADMIN_PASSWORD} --admin_email=${WORDPRESS_ADMIN_EMAIL} --allow-root
     echo "install success"
+    wp user create  ${WORDPRESS_USER}  ${WORDPRESS_USER_EMAIL} --user_pass=WORDPRESS_USER_PASSWORD --path=/var/www/html --allow-root
+    echo "User created successefully"
 fi
 echo "wp configuration is done , php-fpm service is being started from the shell script"
 exec "$@"
