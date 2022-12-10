@@ -38,8 +38,6 @@ services:
       - inception
     volumes:
       - db:/var/lib/mysql
-    env_file:
-      - .env
     restart: unless-stopped
     
 networks:
