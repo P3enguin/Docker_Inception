@@ -1,2 +1,2 @@
 # Docker_Inception
-Creating small infrastructure that consist of 3 Docker images : Nginx Web server, Wordpress with php-fpm and mariadb.
+Hosting Wordpress using Nginx and MariaDB , each one in a seperated docker image .
